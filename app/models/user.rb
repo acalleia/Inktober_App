@@ -2,6 +2,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :username
   has_secure_password
   has_secure_token :auth_token
+  has_many :artworks
 
   def invalidate_token
     self.update_columns(auth_token: nil)
@@ -13,5 +14,5 @@ class User < ApplicationRecord
       user
     end
   end
-  
+
 end
