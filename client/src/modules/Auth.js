@@ -1,14 +1,14 @@
 class Auth {
-  static authenticateToken(toke) {
+  static authenticateToken(token) {
     sessionStorage.setItem('token', token);
   }
 
   static isUserAuthenticated() {
-    return seesionStorage.getItem('token') !== null;
+    return sessionStorage.getItem('token') !== null;
   }
 
   static deauthenticateUser() {
-    return sessionStorage.getItem('token');
+    sessionStorage.removeItem('token');
   }
 
   static getToken() {
