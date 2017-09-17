@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import Auth from '../modules/Auth';
 
+import ArtworkSingle from './ArtworkSingle';
+
 class Dashboard extends Component {
   constructor() {
     super();
@@ -36,8 +38,8 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="dash">
-        {/* {(this.state.userArtworksLoaded) ? this.state.userArtworks.map(artwork => {
-          return <ArtworkSingle key={artwork.id} type="dash" artwork={artwork} /> */}
+         {(this.state.userArtworksLoaded) ? this.state.userArtworks.map(artwork => {
+          return <ArtworkSingle key={artwork.id} type="dash" artwork={artwork} /> 
         }) : <p>Loading...</p>}
       </div>
     );
