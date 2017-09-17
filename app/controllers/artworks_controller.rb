@@ -28,7 +28,7 @@ class ArtworksController < ApiController
 
   private
   def artwork_params
-    params.require(:monster).permit(:name, :description)
+    params.require(:artwork).permit(:url, :title, :description, :date, :prompt)
   end
 
 end
