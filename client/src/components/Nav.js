@@ -15,7 +15,7 @@ const Nav = (props) => {
             <Link to ="/artworks">Artwork</Link>
           </li>
           <li>
-            <Link to ="/newatwork">Add artwork</Link>
+            <Link to ="/newartwork">Add artwork</Link>
           </li>
         </ul>
         {!Auth.isUserAuthenticated() ? (
