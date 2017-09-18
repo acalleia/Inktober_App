@@ -58,8 +58,8 @@ class App extends Component {
     this.handleProgress = this.handleProgress.bind(this);
     this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
     this.handleArtworkSubmit = this.handleArtworkSubmit.bind(this);
-  }
 
+  }
  
 //  upload images to firebase
   handleUploadStart = () => this.setState({isUploading: true, progress: 0});
@@ -106,6 +106,7 @@ class App extends Component {
 
   // Auth
   handleInputChange(e) {
+    e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
     this.setState({
@@ -228,7 +229,14 @@ class App extends Component {
                 this.state.auth ? <Dashboard auth={this.state.auth} resetFireRedirect={this.resetFireRedirect} />
                 : <Redirect to="/login" />}
           />
-           <Route exact path="/artworks" component={ArtworkList} />
+           <Route exact path="/artworks"  
+           render={() =>
+             <ArtworkList 
+              handleInputChange={this.handleInputChange}
+              artworkPrompt={this.state.artworkPrompt}
+              artworkDate={this.state.artworkDate}
+              />}
+            />
           <Route
             exact
             path="/newartwork"
