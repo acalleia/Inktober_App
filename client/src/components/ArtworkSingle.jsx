@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Artwork = (props) => {
+class Artwork extends Component{
+  constructor(){
+    super();
+  }
+
+  render() {
   return (
-    <div className={`artwork-${props.type}`}>
-      <img src={props.artwork.url} alt={props.artwork.title} />
-      <h3>{props.artwork.title}</h3>
-      <p>{props.artwork.prompt}</p>
-      <p>{props.artwork.desciption}</p>
-      {(props.artwork.username) ? <p className="user">{props.artwork.username}</p> : '' }
-    </div>
-  );
+      <div className="ind-artwork">
+        <img src={this.props.artwork.url} alt={this.props.artwork.title} />
+        <h3>{this.props.artwork.title}</h3>
+        <p>{this.props.artwork.prompt}</p>
+        <p>{this.props.artwork.desciption}</p>
+        {(this.props.artwork.username) ? <p className="user">{this.props.artwork.username}</p> : '' }
+      </div>
+    );
+  }
 }
 
 export default Artwork;
