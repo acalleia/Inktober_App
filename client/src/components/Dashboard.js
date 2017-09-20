@@ -39,7 +39,7 @@ class Dashboard extends Component {
     return (
       <div className="dash">
          {(this.state.userArtworksLoaded) ? this.state.userArtworks.map(artwork => {
-          return <ArtworkSingle key={artwork.id} type="dash" artwork={artwork} /> 
+          return <ArtworkSingle key={artwork.id} type="dash" artwork={artwork} handleComments={this.props.handleComments}/> 
         }) : <p>Loading...</p>}
       </div>
     );
