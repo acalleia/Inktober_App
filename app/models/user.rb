@@ -3,6 +3,9 @@ class User < ApplicationRecord
   has_secure_password
   has_secure_token :auth_token
   has_many :artworks
+  has_many :artworks, through: :favorites
+  has_many :comments
+  has_many :comments, through: :comments
 
   def invalidate_token
     self.update_columns(auth_token: nil)
