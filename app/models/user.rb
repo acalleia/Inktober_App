@@ -2,6 +2,7 @@ class User < ApplicationRecord
   validates_uniqueness_of :username
   has_secure_password
   has_secure_token :auth_token
+  has_many :favorites
   has_many :artworks
   has_many :artworks, through: :favorites
   has_many :comments
