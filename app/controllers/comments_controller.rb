@@ -2,11 +2,12 @@ class CommentsController < ApiController
 
   def index
     artp = Artwork.find_by(id: params[:artwork_id])
+    useris = User.find_by(id: params[:user_id])
     comments = Comment.where(artwork_id: params[:artwork_id])
    puts artp
    puts comments
 
-    render json: {artp: artp, comments: comments}
+    render json: {artp: artp, comments: comments, useris: useris}
   end
 
   def create
@@ -23,6 +24,12 @@ class CommentsController < ApiController
       render json: { message: 'Could not post comment' }
     end
   end
+
+  def destroy
+    deleteCom = current_user.comments.find_by(user_id: params[:user_id])
+    deleteCom.destroy!
+  end
+  
 
   private
   def comment_params
