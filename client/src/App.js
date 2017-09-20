@@ -19,8 +19,8 @@ import RegisterForm from './components/RegisterForm';
 import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import ArtworkList from './components/ArtworkList';
-import ArtworkSingle from './components/ArtworkSingle';
 import ArtworkCreate from './components/ArtworkCreate';
+import Comments from './components/Comment';
 
 class App extends Component {
   constructor(props) {
@@ -43,7 +43,12 @@ class App extends Component {
      artworkTitle: '',
      artworkDescription: '',
      artworkDate: '',
-     artworkPrompt: ''
+     artworkPrompt: '',
+     artworkId: '',
+     artworkComments: '',
+     artworkData: '',
+     comment: '',
+     commentsLoaded: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -58,9 +63,9 @@ class App extends Component {
     this.handleProgress = this.handleProgress.bind(this);
     this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
     this.handleArtworkSubmit = this.handleArtworkSubmit.bind(this);
-
+    this.handleComments = this.handleComments.bind(this);
   }
- 
+
 //  upload images to firebase
   handleUploadStart = () => this.setState({isUploading: true, progress: 0});
   
@@ -75,6 +80,25 @@ class App extends Component {
     this.setState({ progress: 100, isUploading: false});
     firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({artworkUrl: url}));
   };
+
+  handleComments(art) {
+    axios(`/artworks/${art}/comments`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Token ${Auth.getToken()}`,
+        token: Auth.getToken(),
+      }
+      }).then(res => {
+        this.setState({
+          artworkData: res.data.artp,
+          artworkComments: res.data.comments,
+          commentsLoaded: true,
+          shouldFireRedirect: true,
+        })
+      }).catch(err => {
+        console.log(err);
+    })
+  }
 
   // send artwork to rails
   handleArtworkSubmit(e) {
@@ -226,13 +250,17 @@ class App extends Component {
               exact
               path="/dashboard"
               render={() =>
-                this.state.auth ? <Dashboard auth={this.state.auth} resetFireRedirect={this.resetFireRedirect} />
+                this.state.auth ? <Dashboard 
+                auth={this.state.auth} 
+                resetFireRedirect={this.resetFireRedirect} 
+                handleComments={this.handleComments}
+          />
                 : <Redirect to="/login" />}
           />
            <Route exact path="/artworks"  
            render={() =>
              <ArtworkList 
-              handleInputChange={this.handleInputChange}
+              handleComments={this.handleComments}
               artworkPrompt={this.state.artworkPrompt}
               artworkDate={this.state.artworkDate}
               />}
@@ -256,6 +284,29 @@ class App extends Component {
               ) : (
                 <Redirect to="/login" />
               )}
+          />
+          <Route 
+              exact
+              path='/artworks/:artwork_id/comments'
+              render={() =>
+                this.state.auth ? (
+                  this.state.commentsLoaded ? (
+                  <Comments
+                    commentsLoaded={this.state.commentsLoaded}
+                    comment={this.state.comment}
+                    artworkData={this.state.artworkData}
+                    handleInputChange={this.handleInputChange}
+                    artworkPrompt={this.state.artworkPrompt}
+                    artworkDate={this.state.artworkDate}
+                    artworkId={this.state.artworkId}
+                    handleComments={this.handleComments}
+                    artworkComments={this.state.artworkComments}
+                  />
+                  ) : null 
+                ) : (
+                  <Redirect to="/login" />
+                )
+              }
           />
           </div>
           </Router>
