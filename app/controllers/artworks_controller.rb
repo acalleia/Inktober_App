@@ -26,6 +26,11 @@ class ArtworksController < ApiController
     end
   end
 
+  def destroy
+    delArtwork = current_user.artworks.find(params[:id])
+    delAwork.destroy!
+  end
+
   private
   def artwork_params
     params.require(:artwork).permit(:url, :title, :description, :date, :prompt)
