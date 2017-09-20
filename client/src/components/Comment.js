@@ -24,7 +24,7 @@ class Comments extends Component{
         this.setState({
           artworkImage: res.data.artp,
           comment: res.data.comments,
-          commentDataLoaded: true ,
+          commentDataLoaded: true,
     })
    })
   }
@@ -104,9 +104,7 @@ class Comments extends Component{
               <p>{comments.comment}</p>
               {/* <a
               onClick={() => 
-           this.deleteComment(comments.id)}
-            >Delete
-              </a> */}
+           this.deleteComment(comments.id)}>Delete</a> */}
             </div>
             )
             })}
