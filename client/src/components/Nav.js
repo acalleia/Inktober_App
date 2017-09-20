@@ -6,7 +6,7 @@ import Auth from '../modules/Auth';
 const Nav = (props) => {
   return (
     <header>
-      <nav>
+      <nav className="nav-bar">
         <ul>
           <li>
             <Link to ="/">Home</Link>
@@ -33,7 +33,7 @@ const Nav = (props) => {
               <Link to="/dashboard">Dashboard</Link>
             </li>
             <li>
-              <span className="logout" onClick={props.logoutUser}>Log Out</span>
+              <a className="logout" onClick={props.logoutUser}>Log Out</a>
             </li>
           </ul>
         )}
