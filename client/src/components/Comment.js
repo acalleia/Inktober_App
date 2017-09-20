@@ -24,7 +24,7 @@ class Comments extends Component{
         this.setState({
           artworkImage: res.data.artp,
           comment: res.data.comments,
-          commentDataLoaded: true
+          commentDataLoaded: true 
     })
         console.log(this.state.comment)
    })
@@ -78,8 +78,8 @@ class Comments extends Component{
         <div>
         {this.state.comment
           .map((comments) => {
-            console.log(this.state.comment)
-            return <p>{this.state.comment}</p>
+            console.log(this.state.comments)
+            return <p key={comments.id}>{comments.comment}</p>
             })}
         </div>
        : <p>Loading...</p>}
