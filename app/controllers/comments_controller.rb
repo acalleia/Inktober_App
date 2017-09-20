@@ -26,8 +26,8 @@ class CommentsController < ApiController
   end
 
   def destroy
-    deleteCom = current_user.comments.find_by(user_id: params[:user_id])
-    deleteCom.destroy!
+    commentId = params[:id]
+    Comment.where(user_id: current_user.id, id: commentId).destroy_all
   end
   
 
