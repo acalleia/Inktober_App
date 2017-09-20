@@ -64,6 +64,7 @@ class App extends Component {
     this.handleUploadSuccess = this.handleUploadSuccess.bind(this);
     this.handleArtworkSubmit = this.handleArtworkSubmit.bind(this);
     this.handleComments = this.handleComments.bind(this);
+    this.navigatePages = this.navigatePages.bind(this);
   }
 
 //  upload images to firebase
@@ -81,6 +82,13 @@ class App extends Component {
     firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({artworkUrl: url}));
   };
 
+  navigatePages() {
+    this.setState = {
+      artworkComments: '',
+      artworkData: ''
+    }
+  }
+
   handleComments(art) {
     axios(`/artworks/${art}/comments`, {
       method: 'GET',
@@ -89,13 +97,20 @@ class App extends Component {
         token: Auth.getToken(),
       }
       }).then(res => {
+        console.log(res)
         this.setState({
           artworkData: res.data.artp,
           artworkComments: res.data.comments,
           commentsLoaded: true,
           shouldFireRedirect: true,
         })
-      }).catch(err => {
+      }).then(
+        this.setState({
+          artworkComments: "",
+          artworkData: "",
+          commentsLoaded: false
+        })
+      ).catch(err => {
         console.log(err);
     })
   }
@@ -261,6 +276,7 @@ class App extends Component {
            render={() =>
              <ArtworkList 
               handleComments={this.handleComments}
+              handleInputChange={this.handleInputChange}
               artworkPrompt={this.state.artworkPrompt}
               artworkDate={this.state.artworkDate}
               />}
