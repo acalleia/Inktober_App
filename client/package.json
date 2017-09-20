@@ -16,7 +16,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "deploy": "cp -a ./build/. ../public/",
     "eject": "react-scripts eject"
   },
+  
   "proxy": "http://localhost:3001"
 }
